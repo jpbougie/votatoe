@@ -1,0 +1,8 @@
+<h1>Poll#create</h1>
+<p>Find me in app/views/poll/create.html.erb</p>
+
+<%= form_for :tweet do |f| %>
+  <label for="status_url">Enter the permalink to your post (in the shape of http://twitter.com/<em>username</em>/status/<em>id</em>)</label>
+    <%= f.text_field :status_url %>
+    <input type="submit" value="start!">
+<% end %>
