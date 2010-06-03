@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   protected
   
   def cassandra
-    @cassandra ||= Cassandra.new("Votwitter")
+    @cassandra ||= Cassandra.new("Votwitter", "127.0.0.1:9160", :timeout => 10000)
   end
   
   def oauth

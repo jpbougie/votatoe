@@ -1,2 +1,15 @@
 <h1>Poll#show</h1>
 <p>Find me in app/views/poll/show.html.erb</p>
+
+<h1><%= @poll['text'] %></h1>
+
+<ul>
+  <% if !@results.blank? %>
+    <% for choice, count in @results %>
+      <li><%= choice %>: <%= count%></li>
+    <% end %>
+  <% else %>
+    
+  <% end %>
+  
+</ul>

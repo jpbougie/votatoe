@@ -17,11 +17,12 @@ class PollController < ApplicationController
       
       if user && authenticated?(user)
         status_id = TwitterUtils.message_id(twitter_status_url)
+        oauth.authorize_from_access(user['token'], user['secret'])
         twitter = Twitter::Base.new(oauth)
         Poll.create(status_id.to_s, user_id.to_s, twitter.status(status_id)['text'])
-        Resque.enqueue(FetchOldVotes, status_id, user_id)
+        Resque.enqueue(FetchVotes, user_id)
         
-        redirect_to show_url(status_id)
+        redirect_to poll_url(status_id)
       else
         oauth.set_callback_url("http://augur.local:3000/authorized")
         session['status_url'] = twitter_status_url
@@ -47,21 +48,25 @@ class PollController < ApplicationController
     session[:atoken] = oauth.access_token.token
     session[:asecret] = oauth.access_token.secret
     
-    user_id = TwitterUtils.get_user_id(session[:status_url])
+    user_id = TwitterUtils.get_user_id(TwitterUtils.username(session[:status_url]))
     status_id = TwitterUtils.message_id(session[:status_url])
-    cassandra.insert(:User, user_id, {"token" => session[:atoken], "secret" => session[:asecret]})
+    cassandra.insert(:User, user_id.to_s, {"token" => session[:atoken], "secret" => session[:asecret]})
     
-    tweet = twitter.show(status_id)
+    tweet = twitter.status(status_id)
     
     Poll.cassandra = cassandra
-    Poll.create(status_id, tweet['user']['id'], tweet['status'])
-    Resque.enqueue(FetchOldVotes, status_id, tweet['user']['id'])
+    Poll.create(status_id, user_id, tweet['text'])
+    Resque.enqueue(FetchVotes, user_id)
     
     redirect_to poll_url(status_id)
   end
 
   def show
     @poll = cassandra.get(:Poll, params[:id])
+    @choices = Poll.choices(params[:id])
+    @results = Poll.results(params[:id])
+    
+    render
   end
 
 end
