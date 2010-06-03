@@ -5,7 +5,7 @@ gem 'rails', '3.0.0.beta3'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3-ruby', :require => 'sqlite3'
+#gem 'sqlite3-ruby', :require => 'sqlite3'
 
 # Use unicorn as the web server
 gem 'unicorn'
@@ -30,3 +30,5 @@ gem 'cassandra'
 gem 'twitter'
 gem 'resque'
 gem 'resque-scheduler', :require => 'resque_scheduler'
+gem 'compass'
+gem 'haml'

@@ -1,0 +1,4 @@
+= if !@polls.blank?
+  %ul
+    - for poll in @polls
+      %li= link_to "a poll", poll_path(:id => poll[0].to_i)

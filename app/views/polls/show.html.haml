@@ -1,0 +1,12 @@
+
+%h2 You asked:
+%h1= @poll['text']
+
+%h2 The tweeple answered:
+- if !@results.blank?
+  %ul
+    - for choice, count in @results
+      %li
+        = choice
+        \: 
+        = count

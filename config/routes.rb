@@ -1,8 +1,11 @@
 Votwitter::Application.routes.draw do |map|
-  match 'poll/create' => "poll#create"
-  match 'poll/:id' => "poll#show", :as => :poll
+  resource :session
+
+  resource :account
   
-  match 'authorized' => "poll#authorized", :as => :authorized
+  resources :polls
+    
+  match 'finalize' => "sessions#finalize", :as => :finalize_session
   
   
   # The priority is based upon order of creation:

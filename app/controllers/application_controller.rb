@@ -11,12 +11,27 @@ class ApplicationController < ActionController::Base
   def oauth
     @oauth ||= begin
       conf = File.open(File.join(File.dirname(__FILE__), '..', '..', 'config', 'twitter.yml') ) { |yf| YAML::load( yf ) }
-      Twitter::OAuth.new(conf['development']['token'], conf['development']['secret'])
+      Twitter::OAuth.new(conf[Rails.env]['token'], conf[Rails.env]['secret'], :sign_in => true)
     end
+  end
+  
+  def signed_in?
+    user && authenticated?(user)
+  end
+  
+  def sign_in profile
+    session[:user] = profile.id
   end
   
   def authenticated? user
     !user['token'].nil? && !user['secret'].nil?
-    
+  end
+  
+  def authenticate
+    redirect_to new_session_path unless signed_in?
+  end
+  
+  def user
+    @user ||= cassandra.get(:User, session[:user].to_s) if session[:user]
   end
 end
