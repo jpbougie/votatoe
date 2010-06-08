@@ -8,3 +8,6 @@
         %strong.percentage= "#{percentage}%"
       %div.progress{:style => "width: #{percentage}%"}
         &nbsp;
+      - if count
+        %span.toggle_votes
+          %a.toggle{:href => ""} show the votes

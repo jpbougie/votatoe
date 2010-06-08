@@ -17,10 +17,20 @@ class PollsController < ApplicationController
   end
   
   def new
+    @recent_tweets = twitter.user_timeline
   end
 
   def show
     @poll = cassandra.get(:Poll, params[:id])
+    
+    if @poll == {}
+      tweet = twitter.status(params[:id])
+      if tweet.user.id == session[:user]
+        Poll.create(params[:id].to_s, session[:user].to_s, tweet.text)
+        Resque.enqueue(FetchVotes, session[:user])
+      end
+    end
+    
     @results = Poll.results(params[:id])
     @choices = Poll.choices(params[:id]).sort_by {|ch| @results[ch]}
     @total = Poll.votes(params[:id])
