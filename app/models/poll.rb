@@ -1,7 +1,8 @@
 class Poll
   def self.add_vote(poll_id, user_id, status_id, choice, full_text)
     cassandra ||= Cassandra.new("Votwitter")
-    cassandra.insert(:Vote, poll_id.to_s, {choice => { user_id => status_id}})
+    cassandra.insert(:Vote, status_id.to_s, {'text' => full_text, 'user' => user_id, 'poll' => poll_id})
+    cassandra.insert(:SortedVote, poll_id.to_s, {choice => { user_id => status_id}})
     
     increment_cache! poll_id, choice
   end
@@ -21,7 +22,7 @@ class Poll
   end
   
   def self.choices poll_id
-    cassandra.get(:Vote, poll_id, :count => 1).keys
+    cassandra.get(:SortedVote, poll_id, :count => 1).keys
   end
   
   def self.results poll_id
@@ -44,10 +45,10 @@ class Poll
   
   def self.reset_caches! poll_id
     poll = cassandra.get(:Poll, poll_id)
-    choices = cassandra.get(:Vote, poll_id, :count => 1).keys
+    choices = cassandra.get(:SortedVote, poll_id, :count => 1).keys
     sum = 0
     choices.each do |choice|
-      count = cassandra.count_columns(:Vote, poll_id, choice)
+      count = cassandra.count_columns(:SortedVote, poll_id, choice)
       sum += count
       Rails.cache.write(['poll', poll_id, 'count', choice].join(":"), count, :raw => true)
     end
@@ -66,5 +67,28 @@ class Poll
   def self.get_count_from_cache poll_id, choice
     key = ['poll', poll_id, 'count', choice].join(":")
     Rails.cache.read(key, :raw => true)
+  end
+  
+  
+  def self.guess_poll_type(text)
+    case text
+      when /^who\s/i then "who"
+      when /^what\s/i then "what"
+      when /^do(es)?\s/i then "yesno"
+      when /^how\s/i then "how"
+      else "other"
+    end
+  end
+  
+  extend Twitter::Extractor
+  def self.guess_choices(text)
+    users = extract_mentioned_screen_names(text)
+    hashtags = extract_hashtags(text)
+    
+    (users.blank? && hashtags) || users
+  end
+  
+  def self.choices_described?(text)
+    !guess_choices(text).blank?
   end
 end

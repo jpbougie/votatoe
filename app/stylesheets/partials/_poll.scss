@@ -1,0 +1,88 @@
+@import "compass/css3/text-shadow";
+
+body.main {
+  h1 {
+    font-size: 200%;
+  }
+  
+  section#question {
+    @include column($blueprint-grid-columns, true);
+    background-color: #FDFBE7;
+    @include border-top-radius(20px);
+    border: 1px solid #e5e5e5;
+    padding-bottom: 20px;
+    
+    div#profile-picture {
+      @include prepend(1);
+      @include column(2);
+      
+      padding-top: 30px;
+      img {
+        display: block;
+        margin: 0 auto;
+      }
+    }
+    div#tweet {
+      padding-left: 10px;
+      padding-top: 20px;
+      @include column($blueprint-grid-columns - 4, true);
+      h1 {
+        font-family: Georgia;
+        margin: 0;
+        padding: 10px 0;
+      }
+    }
+    
+    div#type {
+      float: right;
+      font-size: 60%;
+      margin-right: 10px;
+      color: #888;
+    }
+  }
+
+  section#answers {
+    background-color: white;
+    @include border-bottom-radius(20px);
+    border: 1px solid #e5e5e5;
+    @include column($blueprint-grid-columns, true);
+    
+    h2 {
+      margin: 10px;
+    }
+    
+    li {
+      margin: 20px 10px;
+      border-top: 1px solid #e5e5e5;
+      position: relative;
+      @include span(20);
+      
+      div.progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        height: 25px;
+        padding: 5px;
+        background-color: #C6DAFB;
+        @include border-radius;
+      }
+      
+      div.result {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
+    }
+    
+    strong {
+      font-size: 200%;
+      color: #2251B3;
+    }
+    
+    strong.percentage {
+      color: #5691F6;
+    }
+  }  
+}

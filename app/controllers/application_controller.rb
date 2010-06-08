@@ -15,12 +15,27 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def twitter
+    @twitter ||= begin
+        oauth.authorize_from_access(user['token'], user['secret'])
+        Twitter::Base.new(oauth)
+      end
+  end
+  helper_method :twitter
+  
+  def user_profile
+    
+  end
+  
   def signed_in?
     user && authenticated?(user)
   end
+  helper_method :signed_in?
   
   def sign_in profile
     session[:user] = profile.id
+    
+    create_user_if_needed(profile)
   end
   
   def authenticated? user
@@ -33,5 +48,13 @@ class ApplicationController < ActionController::Base
   
   def user
     @user ||= cassandra.get(:User, session[:user].to_s) if session[:user]
+    @user = nil if @user == {}
+    @user
+  end
+  
+  def create_user_if_needed(profile)
+    unless user
+      cassandra.insert(:User, session[:user].to_s, {'token' => session['atoken'], 'secret' => session['asecret']})
+    end
   end
 end

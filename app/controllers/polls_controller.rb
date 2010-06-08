@@ -10,8 +10,6 @@ class PollsController < ApplicationController
     user_id = session[:user]
     
     status_id = TwitterUtils.message_id(twitter_status_url)
-    oauth.authorize_from_access(user['token'], user['secret'])
-    twitter = Twitter::Base.new(oauth)
     Poll.create(status_id.to_s, user_id.to_s, twitter.status(status_id)['text'])
     Resque.enqueue(FetchVotes, user_id)
       
@@ -23,8 +21,11 @@ class PollsController < ApplicationController
 
   def show
     @poll = cassandra.get(:Poll, params[:id])
-    @choices = Poll.choices(params[:id])
     @results = Poll.results(params[:id])
+    @choices = Poll.choices(params[:id]).sort_by {|ch| @results[ch]}
+    @total = Poll.votes(params[:id])
+    @type = Poll.guess_poll_type(@poll['text'])
+    @possible_choices = Poll.guess_choices(@poll['text'])
   end
 
 end

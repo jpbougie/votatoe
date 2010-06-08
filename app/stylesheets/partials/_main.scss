@@ -1,0 +1,42 @@
+@import "compass/utilities/lists";
+
+body.main {
+  #container {
+    font-family: 'Lucida Grande', sans-serif;
+    @include container;
+    
+    #header h1 {
+      float: left;
+      padding: 0;
+      margin: 0;
+    }
+    
+    menu {
+      @include border-radius;
+      background-color: white;
+      float: right;
+      margin: 5px 0;
+      padding: 5px;
+      ul {
+        @include inline-list;
+        padding: 0;
+        margin: 0;
+        
+        li {
+          padding-left: 0;
+        }
+      }
+    }
+    
+    
+    #header, #footer {
+      @include column($blueprint-grid-columns); }
+    #content {
+      @include column($blueprint-grid-columns);
+      
+      section {
+        display: block;
+      }
+    }
+  }
+}

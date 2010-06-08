@@ -1,12 +1,22 @@
 
-%h2 You asked:
-%h1= @poll['text']
+%section#question
+  #profile-picture
+    %img{:src => twitter_profile_image }
+  #tweet
+    %h1!= auto_link(@poll['text'])
+  #type
+    Votatoe guessed this is a
+    %strong=@type
+    question
+    - if !@possible_choices.blank?
+      with the following choices: 
+      - for choice in @possible_choices
+        %strong= choice
+    
 
-%h2 The tweeple answered:
-- if !@results.blank?
-  %ul
-    - for choice, count in @results
-      %li
-        = choice
-        \: 
-        = count
+%section#answers
+  %h2
+    %span#answers-count= @total
+    people answered. Here's what they had to say
+  - if !@results.blank?
+    = render @type

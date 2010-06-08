@@ -32,3 +32,12 @@ gem 'resque'
 gem 'resque-scheduler', :require => 'resque_scheduler'
 gem 'compass'
 gem 'haml'
+
+gem 'twitter-text'
+
+group :test do
+  gem 'shoulda'
+  gem 'factory_girl'
+end
+
+gem 'rails3-generators', :group => :development

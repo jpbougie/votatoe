@@ -37,6 +37,10 @@ module Votwitter
     config.generators do |g|
     #   g.orm             :active_record
        g.template_engine :haml
+       g.test_framework :shoulda, :fixture => true
+       g.fixture_replacement :factory_girl
+       
+       g.fallbacks[:shoulda] = :test_unit
     #   g.test_framework  :test_unit, :fixture => true
     end
 
