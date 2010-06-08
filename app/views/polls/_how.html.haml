@@ -1,13 +1,8 @@
 %ul
   - for choice in @possible_choices
-    - count = @results[choice]
+    - count = @results[choice] || 0
     - percentage = (count.to_f / @total).ceil * 100
     %li
-      .result
-        %strong= choice
-        %strong.percentage= "#{percentage}%"
-      %div.progress{:style => "width: #{percentage}%"}
-        &nbsp;
-      - if count
-        %span.toggle_votes
-          %a.toggle{:href => ""} show the votes
+      %a{:href => "blah"}= choice
+      %span.count= "#{percentage}%"
+      %span.percentage{:style => "width: #{percentage}%"}= count

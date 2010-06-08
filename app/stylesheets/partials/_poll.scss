@@ -51,42 +51,54 @@ body.main {
       margin: 10px;
     }
     
+    ul {
+      float: left;
+    }
+    
     li {
       margin: 20px 10px;
-      border-top: 1px solid #e5e5e5;
       position: relative;
+      display: block;
+      border-bottom: 1px solid #EEE; 
       @include span(20);
       
-      div.progress {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 0;
-        height: 25px;
-        padding: 5px;
-        background-color: #C6DAFB;
-        @include border-radius;
+      a {
+        display: block; 
+        position: relative; 
+        z-index: 2;
       }
       
-      div.result {
+      a:hover {
+        color: #555;
+      }
+      
+            
+      span, a {
+        font-size: 200%;
+        color: #2251B3;
+      }
+      
+      span.count {
+        position: absolute;
+        right: 0;
+        top: 0;
+        text-align: right;
+        z-index: 2;
+      }
+      
+      span.percentage {
         position: absolute;
         top: 0;
         left: 0;
-        z-index: 1;
+        display: block;
+        color: #5691F6;
+        background-color: #C6DAFB;
+        @include border-radius;
+        text-indent: -9999px;
+        overflow: hidden;
       }
-    }
-    
-    strong {
-      font-size: 200%;
-      color: #2251B3;
-    }
-    
-    strong.percentage {
-      color: #5691F6;
-    }
-    
-    span.toggle_votes {
-      float: right;
-    }
+      
+      
+    }        
   }  
 }
