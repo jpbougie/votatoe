@@ -22,7 +22,7 @@ class Poll
   end
   
   def self.choices poll_id
-    cassandra.get(:SortedVote, poll_id, :count => 1).keys
+    cassandra.get(:SortedVote, poll_id).keys
   end
   
   def self.results poll_id
@@ -45,7 +45,7 @@ class Poll
   
   def self.reset_caches! poll_id
     poll = cassandra.get(:Poll, poll_id)
-    choices = cassandra.get(:SortedVote, poll_id, :count => 1).keys
+    choices = cassandra.get(:SortedVote, poll_id).keys
     sum = 0
     choices.each do |choice|
       count = cassandra.count_columns(:SortedVote, poll_id, choice)

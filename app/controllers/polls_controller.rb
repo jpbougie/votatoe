@@ -3,16 +3,21 @@ require 'pp'
 class PollsController < ApplicationController
   before_filter :authenticate
   def create
-    twitter_status_url = params[:tweet][:status_url]
-    
-    username = TwitterUtils.username(twitter_status_url)
-    
     user_id = session[:user]
     
-    status_id = TwitterUtils.message_id(twitter_status_url)
-    Poll.create(status_id.to_s, user_id.to_s, twitter.status(status_id)['text'])
-    Resque.enqueue(FetchVotes, user_id)
-      
+    if params[:tweet].has_key? :status_url
+      twitter_status_url = params[:tweet][:status_url]
+      username = TwitterUtils.username(twitter_status_url)
+    
+      status_id = TwitterUtils.message_id(twitter_status_url)
+      Poll.create(status_id.to_s, user_id.to_s, twitter.status(status_id)['text'])
+      Resque.enqueue(FetchVotes, user_id)
+    
+    elsif params[:tweet].has_key? :status
+      status_id = twitter.update(params[:tweet][:status])
+    end
+    
+    
     redirect_to poll_path(status_id)
   end
   
@@ -36,6 +41,12 @@ class PollsController < ApplicationController
     @total = Poll.votes(params[:id])
     @type = Poll.guess_poll_type(@poll['text'])
     @possible_choices = Poll.guess_choices(@poll['text'])
+    
+    @votes = {}
+    @choices.each do |choice|
+        votes = cassandra.get(:SortedVote, params[:id].to_s, choice)
+        @votes[choice] = cassandra.multi_get(:Vote, votes.values)
+    end
   end
 
 end

@@ -62,18 +62,18 @@ body.main {
       border-bottom: 1px solid #EEE; 
       @include span(20);
       
-      a {
+      a.choice {
         display: block; 
         position: relative; 
         z-index: 2;
       }
       
       a:hover {
-        color: #555;
+        color: #333;
       }
       
             
-      span, a {
+      span, a.choice {
         font-size: 200%;
         color: #2251B3;
       }
@@ -97,8 +97,6 @@ body.main {
         text-indent: -9999px;
         overflow: hidden;
       }
-      
-      
-    }        
+    }
   }  
 }

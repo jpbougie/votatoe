@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   
   protected
   
+  def twitter_down
+    render :text => "twitter is having difficulties right now"
+  end
+  
   def cassandra
     @cassandra ||= Cassandra.new("Votwitter", "127.0.0.1:9160", :timeout => 10000)
   end

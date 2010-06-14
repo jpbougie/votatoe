@@ -1,5 +1,11 @@
 %h1 Create a poll
 
+#new-tweet
+  = form_for :tweet, :url => polls_path do |f|
+    = f.text_field :status
+    %input{ :type => "submit", :value => "start!"}  
+
+
 #manual
   = form_for :tweet, :url => polls_path do |f|
     %label{:for => "tweet_status_url"} Enter the permalink to your post (in the shape of http://twitter.com/<em>username</em>/status/<em>id</em>)</label>
