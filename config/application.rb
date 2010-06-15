@@ -1,9 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "active_resource/railtie"
-require "rails/test_unit/railtie"
+require 'rails/all'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -35,7 +32,7 @@ module Votwitter
 
     # Configure generators values. Many other options are available, be sure to check the documentation.
     config.generators do |g|
-    #   g.orm             :active_record
+       g.orm             :active_record
        g.template_engine :haml
        g.test_framework :shoulda, :fixture => true
        g.fixture_replacement :factory_girl

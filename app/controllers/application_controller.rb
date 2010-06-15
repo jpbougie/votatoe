@@ -7,11 +7,7 @@ class ApplicationController < ActionController::Base
   def twitter_down
     render :text => "twitter is having difficulties right now"
   end
-  
-  def cassandra
-    @cassandra ||= Cassandra.new("Votwitter", "127.0.0.1:9160", :timeout => 10000)
-  end
-  
+    
   def oauth
     @oauth ||= begin
       conf = File.open(File.join(File.dirname(__FILE__), '..', '..', 'config', 'twitter.yml') ) { |yf| YAML::load( yf ) }
@@ -38,12 +34,9 @@ class ApplicationController < ActionController::Base
   
   def sign_in profile
     session[:user] = profile.id
-    
-    create_user_if_needed(profile)
   end
   
   def authenticated? user
-    !user['token'].nil? && !user['secret'].nil?
   end
   
   def authenticate
@@ -56,9 +49,4 @@ class ApplicationController < ActionController::Base
     @user
   end
   
-  def create_user_if_needed(profile)
-    unless user
-      cassandra.insert(:User, session[:user].to_s, {'token' => session['atoken'], 'secret' => session['asecret']})
-    end
-  end
 end
