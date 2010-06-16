@@ -1,4 +1,4 @@
-
+- total = @poll.votes.count
 %section#question
   #profile-picture
     %img{:src => twitter_profile_image }
@@ -11,24 +11,23 @@
       with the following choices: 
       - for choice in @poll.choices
         %strong= choice
-    
+  #count= "#{total} votes"
 
 %section#answers
-  %h2
-    %span#answers-count= @poll.votes.count
-    people answered. Here's what they had to say
   - if !@poll.votes.blank?
-    %ul
-      - for choice in @poll.choices
-        - votes = @poll.votes.where(:choice => choice)
-        - count = votes.count || 0
-        - percentage = ((count.to_f / @total) * 100).ceil
-        %li
-          %a.choice{:href => ""}= choice
-          %span.count= "#{percentage}%"
-          %span.percentage{:style => "width: #{percentage}%"}= count
-
-          %ul
-            - for vote in votes
-              - if !vote.blank?
-                %li.tweet!= auto_link vote.text
+    - for choice in @poll.choices
+      - votes = @poll.votes.where(:choice => choice)
+      - count = votes.count || 0
+      - percentage = ((count.to_f / total) * 100).ceil
+      
+      %section.choice
+        %hgroup
+          %h1= choice
+          %h2= "#{percentage}%"
+          %h2= "#{count} votes"
+        %ul
+          - for vote in votes
+            - if !vote.blank?
+              %li.tweet
+                %img{:src => profile_picture(vote.author), :width => "20", :height => "20"}
+                %span!= auto_link vote.text

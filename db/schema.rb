@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100615234702) do
+ActiveRecord::Schema.define(:version => 20100616192755) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20100615234702) do
     t.string   "agent"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "text"
   end
 
   add_index "votes", ["poll_id", "author"], :name => "index_votes_on_poll_id_and_author", :unique => true
