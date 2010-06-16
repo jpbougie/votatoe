@@ -1,8 +1,0 @@
-%ul
-  - for choice, count in @results
-    - percentage = (count.to_f / @total).ceil * 100
-    %li
-      %div{:style => "width: #{percentage}%"}
-        %strong= choice
-        %img{:src => profiles[choice].profile_image_url}
-        %strong.percentage= "#{percentage}%"
