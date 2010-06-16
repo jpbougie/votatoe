@@ -26,7 +26,7 @@ gem 'unicorn'
 # end
 
 
-gem 'cassandra'
+#gem 'cassandra'
 gem 'twitter'
 gem 'resque'
 gem 'resque-scheduler', :require => 'resque_scheduler'

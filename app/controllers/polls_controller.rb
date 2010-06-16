@@ -7,10 +7,9 @@ class PollsController < ApplicationController
     
     if params[:tweet].has_key? :status_url
       twitter_status_url = params[:tweet][:status_url]
-      username = TwitterUtils.username(twitter_status_url)
     
-      status_id = TwitterUtils.message_id(twitter_status_url)
-      Poll.create(status_id.to_s, user_id.to_s, twitter.status(status_id)['text'])
+      status_id = twitter_status_url.split("/")[-1]
+      Poll.create(:status_id => status_id, :user => user_id, :text => twitter.status(status_id).text, :last_seen_id => status_id)
       Resque.enqueue(FetchVotes, user_id)
     
     elsif params[:tweet].has_key? :status
@@ -26,27 +25,20 @@ class PollsController < ApplicationController
   end
 
   def show
-    @poll = cassandra.get(:Poll, params[:id])
+    @poll = Poll.find_or_initialize_by_status_id(params[:id])
     
-    if @poll == {}
+    if @poll.new_record?
       tweet = twitter.status(params[:id])
       if tweet.user.id == session[:user]
-        Poll.create(params[:id].to_s, session[:user].to_s, tweet.text)
+        @poll.user = user
+        @poll.text = tweet.text
+        @poll.last_seen_id = params[:id]
+        @poll.save
         Resque.enqueue(FetchVotes, session[:user])
       end
     end
     
-    @results = Poll.results(params[:id])
-    @choices = Poll.choices(params[:id]).sort_by {|ch| @results[ch]}
-    @total = Poll.votes(params[:id])
-    @type = Poll.guess_poll_type(@poll['text'])
-    @possible_choices = Poll.guess_choices(@poll['text'])
     
-    @votes = {}
-    @choices.each do |choice|
-        votes = cassandra.get(:SortedVote, params[:id].to_s, choice)
-        @votes[choice] = cassandra.multi_get(:Vote, votes.values)
-    end
   end
 
 end

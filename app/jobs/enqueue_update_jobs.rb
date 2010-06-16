@@ -1,11 +1,8 @@
 class EnqueueUpdateJobs
   @queue = :meta
   def self.perform
-    cassandra = Cassandra.new("Votwitter")
-    
-    users = cassandra.get_range(:User).collect {|r| r.key}
-    
-    # enqueues those who actually have polls
-    users.select {|u| cassandra.get(:UserPoll, u, :count => 1) != {} }.each {|u| Resque.enqueue(FetchVotes, u)}
+    # get the active users (ie. those who actually have polls)
+    # and enqueue the update jobs for those
+    User.active.each {|u| Resque.enqueue(FetchVotes, u.twitter_id) }
   end
 end

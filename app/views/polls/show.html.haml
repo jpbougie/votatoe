@@ -3,20 +3,32 @@
   #profile-picture
     %img{:src => twitter_profile_image }
   #tweet
-    %h1!= auto_link(@poll['text'])
+    %h1!= auto_link(@poll.text)
   #type
     Votatoe guessed this is a
-    %strong=@type
     question
-    - if !@possible_choices.blank?
+    - if !@poll.choices.blank?
       with the following choices: 
-      - for choice in @possible_choices
+      - for choice in @poll.choices
         %strong= choice
     
 
 %section#answers
   %h2
-    %span#answers-count= @total
+    %span#answers-count= @poll.votes.count
     people answered. Here's what they had to say
-  - if !@results.blank?
-    = render @type
+  - if !@poll.votes.blank?
+    %ul
+      - for choice in @poll.choices
+        - votes = @poll.votes.where(:choice => choice)
+        - count = votes.count || 0
+        - percentage = ((count.to_f / @total) * 100).ceil
+        %li
+          %a.choice{:href => ""}= choice
+          %span.count= "#{percentage}%"
+          %span.percentage{:style => "width: #{percentage}%"}= count
+
+          %ul
+            - for vote in votes
+              - if !vote.blank?
+                %li.tweet!= auto_link vote.text
