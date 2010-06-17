@@ -1,0 +1,33 @@
+@import "compass/css3/gradient";
+
+section#get-started {
+  border: 1px solid #e0e0e0;
+  width: 600px;
+  margin: 0 auto;
+  background: white;
+  @include border-radius(20px);
+  padding: 20px;
+  
+  #new-tweet button {
+    padding: 5px;
+    @include linear-gradient(color-stops(#f0f0f0, #e0e0e0));
+    width: 200px;
+    @include border-radius(20px);
+    border: 1px solid #d5d5d5;
+    background-color: transparent;
+    
+    h2 {
+      font-size: 175%;
+    }
+  }
+  
+  #existing {
+    display: none;
+  }
+  
+  input#tweet_status_url, input#tweet_status {
+    font-size: 200%;
+    width: 500px;
+    
+  }
+}

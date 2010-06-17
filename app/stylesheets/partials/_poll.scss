@@ -7,9 +7,7 @@ body.main {
   
   section#question {
     @include column($blueprint-grid-columns, true);
-    background-color: #FDFBE7;
-    @include border-top-radius(20px);
-    border: 1px solid #e5e5e5;
+    
     padding-bottom: 20px;
     
     div#profile-picture {
@@ -22,15 +20,39 @@ body.main {
         margin: 0 auto;
       }
     }
+    
     div#tweet {
-      padding-left: 10px;
-      padding-top: 20px;
-      @include column($blueprint-grid-columns - 4, true);
+      @include column($blueprint-grid-columns - 3, true);
       h1 {
-        font-family: Georgia;
+        font-weight: bold;
         margin: 0;
-        padding: 10px 0;
+        background-color: #FDFADC;
+        padding: 20px 15px;
+        
       }
+      
+      .speech-arrow {
+        margin-left: 50px;
+        font-size: 0px; line-height: 0%; width: 0px;
+        border-top: 25px solid #FDFADC;
+        border-left: 25px solid #f0f0f0;
+        border-right: 25px solid #f0f0f0;
+      }
+    }
+    
+    #count {
+      background: white;
+      padding: 5px 20px;
+      border: 1px solid #e5e5e5;
+      text-align: center;
+      color: #999;
+      @include column(1);
+      span {
+        display: block;
+        font-size: 250%;
+        font-weight: bold;
+        color: #333;
+      } 
     }
     
     div#type {
@@ -42,32 +64,45 @@ body.main {
   }
 
   section#answers {
-    background-color: white;
-    @include border-bottom-radius(20px);
-    border: 1px solid #e5e5e5;
     @include column($blueprint-grid-columns, true);
     padding: 10px 0;
   
   
     section.choice {
       @include column($blueprint-grid-columns, true);
-      
+      padding-bottom: 30px;
       hgroup {
-        @include column(6);
+        @include column(4);
         text-align: right;
         
         h1 {
           font-size: 250%;
+          font-weight: bold;
+          color: #FF4E4B;
         }
         
         h2 {
           font-size: 100%;
         }
+        
+        h2.percentage {
+          font-size: 150%;
+          font-weight: bold;
+          margin-top: -8px;
+        }
       }
       
       ul {
+        @include prepend(1);
         @include column(18, true);
         list-style: none;
+        background: white;
+        padding: 20px;
+        border: 1px solid #e5e5e5;
+        
+        li.tweet {
+          padding: 5px;
+        }
       }
     }
   

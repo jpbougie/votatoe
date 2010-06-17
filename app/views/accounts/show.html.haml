@@ -1,7 +1,14 @@
-%img{ :src => twitter_profile_image }
-- if !@polls.blank?
+#profile
+  %img.picture{ :src => twitter_profile_image }
+  %h1 Your Dashboard
+  %h2= pluralize(@polls.count, "active poll")
+#polls
   %ul
     - for poll in @polls
-      %li= link_to "a poll", poll_path(:id => poll[0].to_i)
-- else
-  You don't seem to have any polls setup just yet
+      %li
+        %a{:href => poll_path(:id => poll.status_id)}
+          %h2= poll.text
+          %h3= pluralize(poll.votes.count, "vote")
+    %li#new-poll
+      %a(href = new_poll_path)
+        %h2 Make a new poll

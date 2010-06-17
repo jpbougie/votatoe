@@ -7,6 +7,12 @@ Votwitter::Application.routes.draw do |map|
     
   match 'finalize' => "sessions#finalize", :as => :finalize_session
   
+  match 'dashboard' => "accounts#show"
+  
+  match 'logout' => "sessions#destroy"
+  
+  root :to => redirect('/dashboard')
+  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

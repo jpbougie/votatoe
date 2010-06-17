@@ -1,17 +1,11 @@
 - total = @poll.votes.count
 %section#question
-  #profile-picture
-    %img{:src => twitter_profile_image }
+  #count
+    %span=total
+    = total > 1 ? "votes" : "vote"
   #tweet
     %h1!= auto_link(@poll.text)
-  #type
-    Votatoe guessed this is a
-    question
-    - if !@poll.choices.blank?
-      with the following choices: 
-      - for choice in @poll.choices
-        %strong= choice
-  #count= "#{total} votes"
+    .speech-arrow
 
 %section#answers
   - if !@poll.votes.blank?
@@ -23,8 +17,8 @@
       %section.choice
         %hgroup
           %h1= choice
-          %h2= "#{percentage}%"
-          %h2= "#{count} votes"
+          %h2.percentage= "#{percentage}%"
+          %h2= pluralize(count, "vote")
         %ul
           - for vote in votes
             - if !vote.blank?

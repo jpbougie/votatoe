@@ -1,0 +1,72 @@
+@import "compass/utilities/lists";
+
+#profile {
+  @include column(18, true);
+  @include append(6);
+  .picture {
+    background-color: white;
+    border: 1px solid #d5d5d5;
+    padding: 5px;
+    float: left;
+    margin-right: 10px;
+  }
+  
+  h1 {
+    font-weight: bold;
+  }
+  
+  h2 {
+    color: #555;
+  }
+  
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#polls {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  @include column(24, true);
+  ul {
+    @include inline-list;
+    
+    li {
+      display: block;
+      @include column(6);
+      background: white;
+      border: 1px solid #d5d5d5;
+      
+      a {
+        height: 175px;
+        display: block;
+        padding: 20px;
+        color: #333;
+        font-weight: bold;
+        
+        &:hover {
+          h2 {
+            color: #FF4E4B !important;
+          }
+        };
+        
+        h2 {
+          font-size: 150%;
+        }
+        
+        h3 {
+          color: #555;
+        }
+      }
+    }
+    
+    #new-poll a {
+      background-color: #E2EBFD;
+      h2 {
+        color: #2E6EF4;
+      }
+      
+    }
+    
+  }
+  
+}

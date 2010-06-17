@@ -57,5 +57,5 @@ class ApplicationController < ActionController::Base
   def user
     @user ||= User.find_by_twitter_id(session[:user]) if session[:user]
   end
-  
+  helper_method :user
 end
