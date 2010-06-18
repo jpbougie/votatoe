@@ -1,14 +1,43 @@
 @import "compass/css3/gradient";
 
 section#get-started {
-  border: 1px solid #e0e0e0;
   width: 600px;
   margin: 0 auto;
-  background: white;
-  @include border-radius(20px);
   padding: 20px;
   
+  
+  #status-bubble {
+    background-color: #FF4E4B;
+    padding: 30px;
+    @include border-radius(20px);
+    textarea#tweet_status {
+      color: white;
+      font-size: 200%;
+      font-weight: bold;
+      background-color: transparent;
+      border: 0;
+      width: 100%;
+      outline-style: none;
+      
+      &::-webkit-input-placeholder {
+        color: #F7DEDD;
+        font-style: italic;
+      }
+    }
+  }
+  
+  .speech-arrow {
+    margin-left: 450px;
+    font-size: 0px; line-height: 0%; width: 0px;
+    border-top: 25px solid #FF4E4B;
+    border-left: 25px solid #f0f0f0;
+    border-right: 25px solid #f0f0f0;
+  }
+  
+  
   #new-tweet button {
+    float: right;
+    margin: 20px;
     padding: 5px;
     @include linear-gradient(color-stops(#f0f0f0, #e0e0e0));
     width: 200px;

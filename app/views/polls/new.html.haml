@@ -1,12 +1,13 @@
 %section#get-started
   #new-tweet
-    %div{:align => "center"}
-      %h1
-        Ask your audience
-      = form_for :tweet, :url => polls_path do |f|
-        = f.text_field :status
-        %button{:type => "submit"}
-          %h2 get started!
+    %h1
+      Ask your audience
+    = form_for :tweet, :url => polls_path do |f|
+      #status-bubble
+        = f.text_area :status, :rows => 5, :placeholder => "Do you think...", :autofocus => true
+      .speech-arrow
+      %button{:type => "submit"}
+        %h2 get started!
   
   %a#show-existing{:href => ""} I have already tweeted my question
   #existing

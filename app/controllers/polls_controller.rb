@@ -9,11 +9,13 @@ class PollsController < ApplicationController
       twitter_status_url = params[:tweet][:status_url]
     
       status_id = twitter_status_url.split("/")[-1]
-      Poll.create(:status_id => status_id, :user => user_id, :text => twitter.status(status_id).text, :last_seen_id => status_id)
+      tweet = twitter.status(status_id)
+      Tweet.create(:status_id => status_id, :payload => ActiveSupport::JSON.encode(tweet))
+      Poll.create(:status_id => status_id, :user => user_id, :text => tweet.text, :last_seen_id => status_id)
       Resque.enqueue(FetchVotes, user_id)
     
     elsif params[:tweet].has_key? :status
-      status_id = twitter.update(params[:tweet][:status])
+      status_id = twitter.update(params[:tweet][:status]).id
     end
     
     
@@ -29,6 +31,7 @@ class PollsController < ApplicationController
     
     if @poll.new_record?
       tweet = twitter.status(params[:id])
+      Tweet.create(:status_id => params[:id], :payload => ActiveSupport::JSON.encode(tweet))
       if tweet.user.id == session[:user]
         @poll.user = user
         @poll.text = tweet.text

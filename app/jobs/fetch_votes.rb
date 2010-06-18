@@ -40,14 +40,19 @@ class FetchVotes
             else
               "unknown"
             end
+            
             # add the vote into the database
-          
+            Tweet.create(:status_id => vote[:id], :payload => ActiveSupport::JSON.encode(tweet))
             poll.votes
                 .create(:status_id => vote[:id],
                         :author => vote.user[:id],
                         :text => vote.text,
                         :agent => vote.source,
                         :choice => choice)
+                        
+                        
+            # add the profile picture to the cache
+            Rails.cache.write("twitter_profile_picture:#{vote.user[:id]}", vote.user[:profile_image_url])
           end
         end
         # continue while we're capped
