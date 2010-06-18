@@ -9,6 +9,6 @@ module ApplicationHelper
   end
   
   def profiles(users)
-    twitter.users(users)
+    twitter.users(*users)
   end
 end

@@ -1,0 +1,21 @@
+Bluepill.application("votatoe") do |app|
+  app.process("unicorn") do |process|
+    process.working_dir = "/data/votatoe/current"
+    process.start_command = "unicorn -c config/unicorn.rb -e production -D config.ru"
+    process.pid_file = "/data/votatoe/shared/pids/unicorn.pid"
+  end
+  
+  app.process("resque_worker") do |process|
+    process.working_dir = "/data/votatoe/current"
+    process.start_command = "RAILS_ENV=production QUEUE=* rake resque:work"
+    process.daemonize = true
+    process.pid_file = "/data/votatoe/shared/pids/worker.pid"
+  end
+  
+  app.process("resque_scheduler") do |process|
+    process.working_dir = "/data/votatoe/current"
+    process.start_command = "rake resque:scheduler"
+    process.daemonize = true
+    process.pid_file = "/data/votatoe/shared/pids/scheduler.pid"
+  end
+end

@@ -39,14 +39,16 @@ section#get-started {
     float: right;
     margin: 20px;
     padding: 5px;
-    @include linear-gradient(color-stops(#f0f0f0, #e0e0e0));
+    //@include linear-gradient(color-stops(#f0f0f0, #e0e0e0));
     width: 200px;
-    @include border-radius(20px);
-    border: 1px solid #d5d5d5;
-    background-color: transparent;
+    //@include border-radius(20px);
+    border: 1px solid #548147;
+    background-color: #8CD331;
     
     h2 {
-      font-size: 175%;
+      font-size: 200%;
+      font-weight: bold;
+      color: white;
     }
   }
   

@@ -1,4 +1,5 @@
 - total = @poll.votes.count
+-# users = profiles([session[:user].to_i] + @poll.votes.map {|v| v.author.to_i })
 %section#question
   #count
     %span=total
@@ -21,7 +22,11 @@
           %h2= pluralize(count, "vote")
         %ul
           - for vote in votes
-            - if !vote.blank?
-              %li.tweet
+            %li.tweet
+              %span!= auto_link vote.text.gsub(%r{^@#{@poll.user.username} }i, '')
+              %a.from{:href => "http://twitter.com/#{vote.username}"}
+                = vote.username
                 %img{:src => profile_picture(vote.author), :width => "20", :height => "20"}
-                %span!= auto_link vote.text
+              
+  - else
+    %h1 No one has answered this poll yet. Your followers should reply to the tweet using #hashtags to describe their choice.

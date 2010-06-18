@@ -23,7 +23,7 @@ class PollsController < ApplicationController
   end
   
   def new
-    @recent_tweets = twitter.user_timeline
+    #@recent_tweets = twitter.user_timeline
   end
 
   def show

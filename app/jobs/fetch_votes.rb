@@ -46,6 +46,7 @@ class FetchVotes
             poll.votes
                 .create(:status_id => vote[:id],
                         :author => vote.user[:id],
+                        :username => vote.user[:screen_name],
                         :text => vote.text,
                         :agent => vote.source,
                         :choice => choice)
