@@ -1,4 +1,4 @@
-
+God.pid_file_directory = '/data/votatoe/shared/pids'
 rails_env = ENV['RAILS_ENV'] || 'production'
 rails_root = ENV['RAILS_ROOT'] || "/data/votatoe/current"
 
@@ -57,7 +57,6 @@ God.watch do |w|
   end
 end
 
-God.pid_file_directory = '/data/votatoe/shared/pids'
 num_workers = rails_env == 'production' ? 2 : 1
 
 num_workers.times do |num|
