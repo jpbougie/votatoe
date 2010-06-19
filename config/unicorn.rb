@@ -13,7 +13,7 @@ preload_app true
 timeout 30
 
 # Listen on a Unix data socket
-listen '/data/votatoe/current/tmp/sockets/unicorn.sock', :backlog => 2048
+listen '/data/votatoe/shared/sockets/unicorn.sock', :backlog => 2048
 
 pid '/data/votatoe/shared/pids/unicorn.pid'
 
