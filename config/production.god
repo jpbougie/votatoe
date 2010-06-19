@@ -111,7 +111,7 @@ num_workers.times do |num|
 end
 
 
-GGod.watch do |w|
+God.watch do |w|
   w.name     = "resque-scheduler"
   w.interval = 30.seconds
   w.env      = {"QUEUE"=>"*", "RAILS_ENV"=>rails_env}
