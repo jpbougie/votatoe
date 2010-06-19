@@ -42,7 +42,7 @@ class FetchVotes
             end
             
             # add the vote into the database
-            Tweet.create(:status_id => vote[:id], :payload => ActiveSupport::JSON.encode(tweet))
+            Tweet.create(:status_id => vote[:id], :payload => ActiveSupport::JSON.encode(vote))
             poll.votes
                 .create(:status_id => vote[:id],
                         :author => vote.user[:id],

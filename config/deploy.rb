@@ -24,6 +24,13 @@ namespace :twitter do
   end
 end
 
+after "deploy:update", "compass:allow_compiled_dir"
+namespace :compass do
+  task :allow_compiled_dir do
+    run "chmod a+r #{current_path}/public/stylesheets"
+  end
+end
+
 namespace :deploy do
   task :start do
     #run 'rvmsudo god start unicorn resque-work resque-scheduler'

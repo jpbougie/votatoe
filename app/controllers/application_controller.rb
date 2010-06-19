@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   def create_user_if_needed(profile)
     u = User.find_or_initialize_by_twitter_id(session[:user])
     if u.new_record?
-      u.username = profile.username
+      u.username = profile.screen_name
       u.save
     end
     
