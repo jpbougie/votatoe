@@ -1,5 +1,6 @@
 
-rails_env = ENV['RAILS_ENV'] || 'production'rails_root = ENV['RAILS_ROOT'] || "/data/votatoe/current"
+rails_env = ENV['RAILS_ENV'] || 'production'
+rails_root = ENV['RAILS_ROOT'] || "/data/votatoe/current"
 
 God.watch do |w|
   w.name = "unicorn"
