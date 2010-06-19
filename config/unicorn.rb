@@ -7,7 +7,7 @@ worker_processes (rails_env == 'production' ? 16 : 4)
 
 # Load rails+votatoe.git into the master before forking workers
 # for super-fast worker spawn times
-#preload_app true
+preload_app true
 
 # Restart any workers that haven't responded in 30 seconds
 timeout 30
