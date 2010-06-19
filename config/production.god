@@ -6,6 +6,8 @@ God.watch do |w|
   w.name = "unicorn"
   w.interval = 30.seconds # default
 
+  w.env = {"RAILS_ENV"=>rails_env}
+
   # unicorn needs to be run from the rails root
   w.start = "#{rails_root}/script/start_unicorn"
 
