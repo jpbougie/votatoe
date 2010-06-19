@@ -67,3 +67,4 @@ end
 God.watch do |w|
   w.name = "resque-scheduler"
   w.start = "cd #{rails_root} && rake resque:scheduler"
+end
