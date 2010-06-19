@@ -7,7 +7,7 @@ God.watch do |w|
   w.interval = 30.seconds # default
 
   # unicorn needs to be run from the rails root
-  w.start = "cd #{rails_root} && /usr/local/bin/unicorn -c #{rails_root}/config/unicorn.rb -E #{rails_env} -D config.ru"
+  w.start = "cd #{rails_root} && ~jpbougie/.rvm/bin/rake-ruby-1.9.2-head -c #{rails_root}/config/unicorn.rb -E #{rails_env} -D config.ru"
 
   # QUIT gracefully shuts down workers
   w.stop = "kill -QUIT `cat /data/votatoe/shared/pids/unicorn.pid`"
@@ -67,6 +67,9 @@ num_workers.times do |num|
     w.env      = {"QUEUE"=>"*", "RAILS_ENV"=>rails_env}
     w.start    = "~jpbougie/.rvm/bin/rake-ruby-1.9.2-head -f #{rails_root}/Rakefile environment resque:work"
 
+    w.dir = rails_root
+    w.log = "#{rails_root}/log/resque-#{num}.log"
+    
     w.uid = 'www-data'
     w.gid = 'www-data'
 
