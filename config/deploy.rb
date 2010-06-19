@@ -15,3 +15,11 @@ role :db,  "linode", :primary => true # This is where Rails migrations will run
 #role :db,  "your slave db-server here"
 
 set :deploy_to, "/data/#{application}"
+
+after "deploy:update", "twitter:move_config"
+
+namespace :twitter do
+  task :move_config do
+    run " cp #{shared_path}/twitter.yaml #{current_path}/config/twitter.yaml"
+  end
+end
