@@ -1,0 +1,5 @@
+source ~jpbougie/.rvm/scripts/rvm
+
+cd /data/votatoe/current/
+
+unicorn -E production -c config/unicorn.rb config.ru
