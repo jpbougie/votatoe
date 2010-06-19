@@ -1,4 +1,4 @@
-source ~jpbougie/.rvm/scripts/rvm
+rvm use 1.9.2-head
 
 cd /data/votatoe/current/
 

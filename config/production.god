@@ -19,8 +19,8 @@ God.watch do |w|
   w.restart_grace = 10.seconds
   w.pid_file = "/data/votatoe/shared/pids/unicorn.pid"
 
-  w.uid = 'www-data'
-  w.gid = 'www-data'
+  w.uid = 'votatoe'
+  w.gid = 'votatoe'
 
   w.behavior(:clean_pid_file)
 
@@ -70,8 +70,8 @@ num_workers.times do |num|
     w.dir = rails_root
     w.log = "#{rails_root}/log/resque-#{num}.log"
     
-    w.uid = 'www-data'
-    w.gid = 'www-data'
+    w.uid = 'votatoe'
+    w.gid = 'votatoe'
 
     # retart if memory gets too high
     w.transition(:up, :restart) do |on|
@@ -119,8 +119,8 @@ God.watch do |w|
   w.env      = {"QUEUE"=>"*", "RAILS_ENV"=>rails_env}
   w.start    = "#{rails_root}/script/start_resque_scheduler"
 
-  w.uid = 'www-data'
-  w.gid = 'www-data'
+  w.uid = 'votatoe'
+  w.gid = 'votatoe'
 
   # retart if memory gets too high
   w.transition(:up, :restart) do |on|
