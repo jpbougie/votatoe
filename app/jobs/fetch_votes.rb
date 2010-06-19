@@ -27,7 +27,7 @@ class FetchVotes
           query.merge!( {:max_id => mentions[-1]['id']})
         end
       
-        mentions.select {|m| rid = m.in_reply_to_status_id.to_s; poll_ids.include?(rid)}.each do |vote|
+        mentions.select {|m| rid = m.in_reply_to_status_id; poll_ids.include?(rid)}.each do |vote|
           # ignore votes that have already been registered
           poll = user.polls.find_by_status_id(vote.in_reply_to_status_id)
           unless Vote.exists?(:author => vote.user[:id], :poll_id => poll.id)

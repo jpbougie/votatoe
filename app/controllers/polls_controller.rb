@@ -8,7 +8,7 @@ class PollsController < ApplicationController
     if params[:tweet].has_key? :status_url
       twitter_status_url = params[:tweet][:status_url]
     
-      status_id = twitter_status_url.split("/")[-1]
+      status_id = twitter_status_url.split("/")[-1].to_i
       tweet = twitter.status(status_id)
       Tweet.create(:status_id => status_id, :payload => ActiveSupport::JSON.encode(tweet))
       Poll.create(:status_id => status_id, :user => user_id, :text => tweet.text, :last_seen_id => status_id)

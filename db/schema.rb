@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100618190521) do
+ActiveRecord::Schema.define(:version => 20100619133356) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20100618190521) do
   create_table "polls", :force => true do |t|
     t.integer  "user_id"
     t.string   "text"
-    t.string   "status_id"
+    t.integer  "status_id",    :limit => 255
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20100618190521) do
   add_index "polls", ["status_id"], :name => "index_polls_on_status_id", :unique => true
 
   create_table "tweets", :force => true do |t|
-    t.string   "status_id"
+    t.integer  "status_id",  :limit => 255
     t.text     "payload"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20100618190521) do
 
   create_table "users", :force => true do |t|
     t.string   "username"
-    t.string   "twitter_id"
+    t.integer  "twitter_id", :limit => 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20100618190521) do
 
   create_table "votes", :force => true do |t|
     t.integer  "poll_id"
-    t.string   "status_id"
+    t.integer  "status_id",  :limit => 255
     t.string   "author"
     t.string   "choice"
     t.string   "location"
