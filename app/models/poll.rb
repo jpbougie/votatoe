@@ -3,6 +3,6 @@ class Poll < ActiveRecord::Base
   has_many :votes
   
   def choices
-    self.votes.select("DISTINCT choice").map(&:choice)
+    votes.group(:choice).order("count(votes.choice) DESC").select("votes.choice").map(&:choice)
   end
 end
