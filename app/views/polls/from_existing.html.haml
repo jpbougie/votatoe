@@ -1,0 +1,16 @@
+%section#get-started
+  #existing
+    %h1 Track the feedback on a recent tweet of yours
+    %ul
+      - for tweet in @recent_tweets
+        %li
+          != auto_link(tweet.text)
+          = link_to "start!", poll_path(tweet.id), :class => "start"
+  
+    #manual
+      %h2#enter-address Not in your recent tweets? Enter its address manually
+      = form_for :tweet, :url => polls_path do |f|
+        %label{:for => "tweet_status_url"}
+          Enter the permalink to your post (in the shape of http://twitter.com/<em>username</em>/status/<em>id</em>)</label>
+        = f.text_field :status_url, :value => "http://twitter.com/#{user.username.downcase}/status/"
+        %input{ :type => "submit", :value => "start!"}

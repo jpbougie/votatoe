@@ -3,7 +3,11 @@ Votwitter::Application.routes.draw do |map|
 
   resource :account
   
-  resources :polls
+  resources :polls do
+    collection do
+      get :from_existing
+    end
+  end
     
   match 'finalize' => "sessions#finalize", :as => :finalize_session
   

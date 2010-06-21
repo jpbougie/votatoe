@@ -9,20 +9,4 @@
       %button{:type => "submit"}
         %h2 get started!
   
-  %a#show-existing{:href => ""} I have already tweeted my question
--#  #existing
--#    %h1 or see the feedback on a recent tweet of yours
--#    %ul
--#      - for tweet in @recent_tweets
--#        %li
--#          != auto_link(tweet.text)
--#          = link_to "start!", poll_path(tweet.id)
--#  
--#    %a#show-manual{:href => ""} Not in your recent tweets? Enter its address manually
--#    #manual
--#      = form_for :tweet, :url => polls_path do |f|
--#        %label{:for => "tweet_status_url"}
--#          Enter the permalink to your post (in the shape of http://twitter.com/<em>username</em>/status/<em>id</em>)</label>
--#        = f.text_field :status_url
--#        %input{ :type => "submit", :value => "start!"}
--#  
+  %a#show-existing{:href => from_existing_polls_path} I have already tweeted my question

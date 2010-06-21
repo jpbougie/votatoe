@@ -53,7 +53,33 @@ section#get-started {
   }
   
   #existing {
-    display: none;
+    ul {
+      list-style: none;
+      
+      li {
+        background-color: white;
+        padding: 10px;
+        margin: 10px 0;
+      }
+      
+      a.start {
+        float: right;
+      }
+    }
+    
+    #manual {
+      h2 {
+        font-weight: bold;
+      }
+      label {
+        font-style: italic;
+        font-size: 75%;
+      }
+      
+      input {
+        font-size: 125%;
+      }
+    }
   }
   
   input#tweet_status_url, input#tweet_status {

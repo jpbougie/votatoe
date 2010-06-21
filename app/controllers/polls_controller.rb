@@ -23,7 +23,10 @@ class PollsController < ApplicationController
   end
   
   def new
-    #@recent_tweets = twitter.user_timeline
+  end
+  
+  def from_existing
+    @recent_tweets = twitter.user_timeline.select {|tweet| !Poll.exists?(:status_id => tweet.id)}
   end
 
   def show
