@@ -31,6 +31,13 @@ namespace :compass do
   end
 end
 
+after "deploy:update", "compass:compile"
+namespace :compass do
+  task :compile do
+    run "compass compile #{current_path}"
+  end
+end
+
 namespace :deploy do
   task :start do
     #run 'rvmsudo god start unicorn resque-work resque-scheduler'
