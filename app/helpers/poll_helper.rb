@@ -8,6 +8,8 @@ module PollHelper
         url = twitter.user(user).profile_image_url
         Rails.cache.write("twitter_profile_picture:#{user}", url)
         url
+      rescue TwitterError
+        nil
       end
   end
 end
