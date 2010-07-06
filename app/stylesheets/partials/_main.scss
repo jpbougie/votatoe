@@ -5,6 +5,7 @@
 
 
 body.main {
+  text-rendering: optimizeLegibility;
   #container {
     font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
     @include container;
@@ -33,7 +34,7 @@ body.main {
         }
         
         div.speech-arrow {
-          margin-left: 100px;
+          margin-left: 80px;
           font-size: 0px; line-height: 0%; width: 0px;
           border-top: 15px solid #333;
           border-left: 15px solid #f0f0f0;
@@ -75,5 +76,25 @@ body.main {
         display: block;
       }
     }
+  }
+}
+
+#home-page {
+  h1 {
+    font-weight: bold;
+  }
+  
+  h1#call-to-action {
+    margin: 20px;
+    padding: 20px 10px 10px 10px;
+    border: 10px solid #ccc;
+    text-align: center;
+    background: #E2EBFD;
+    color: black;
+  }
+  
+  h2 {
+    font-size: 150%;
+    margin: 15px 0 0 0;
   }
 }

@@ -1,0 +1,19 @@
+#home-page
+  %h1 Get feedback from your audience
+
+  %h2 Connect to your twitter account
+  %p No account needed, no additional password to remember.
+
+  %h2 Ask a question
+  %p A poll is a simple tweet away
+  
+  %h2 Collect the answers
+  %p Your tweet's replies will be tracked and presented to you, seamlessly
+  
+  %h2 Sort, filter, search
+  %p Extract the details you want
+  
+  %h1#call-to-action
+    Get started now!
+    = form_for :sign_in, :url => session_path do |f|
+      = image_submit_tag 'twitter_sign_in.png'

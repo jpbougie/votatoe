@@ -15,7 +15,7 @@ Votwitter::Application.routes.draw do |map|
   
   match 'logout' => "sessions#destroy"
   
-  root :to => redirect('/dashboard')
+  root :to => 'home#index'
   
   
   # The priority is based upon order of creation:
