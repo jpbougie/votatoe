@@ -6,7 +6,7 @@ Votwitter::Application.configure do
   # since you don't have to restart the webserver when you make code changes.
   config.cache_classes = false
 
-  config.cache_store = :mem_cache_store
+  config.cache_store = :redis_store
   
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true

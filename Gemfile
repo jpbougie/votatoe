@@ -27,6 +27,9 @@ gem 'pg'
 #   gem 'webrat'
 # end
 
+# use redis for the sessions and cache
+gem 'redis'
+gem 'redis-store', '1.0.0.beta2'
 
 #gem 'cassandra'
 gem 'twitter'
