@@ -9,7 +9,7 @@ God.watch do |w|
   w.env = {"RAILS_ENV"=>rails_env}
 
   # unicorn needs to be run from the rails root
-  w.start = "unicorn -E production -c #{rails_root}/config/unicorn.rb"
+  w.start = "unicorn -E production -c #{rails_root}/config/unicorn.rb #{rails_root}/config.ru"
 
   # QUIT gracefully shuts down workers
   w.stop = "kill -QUIT `cat /data/votatoe/shared/pids/unicorn.pid`"
