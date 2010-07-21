@@ -9,7 +9,7 @@ God.watch do |w|
   w.env = {"RAILS_ENV"=>rails_env}
 
   # unicorn needs to be run from the rails root
-  w.start = "#{rails_root}/script/start_unicorn"
+  w.start = "unicorn -E production -c #{rails_root}/config/unicorn.rb"
 
   # QUIT gracefully shuts down workers
   w.stop = "kill -QUIT `cat /data/votatoe/shared/pids/unicorn.pid`"
@@ -67,7 +67,7 @@ num_workers.times do |num|
     w.group    = 'resque'
     w.interval = 30.seconds
     w.env      = {"QUEUE"=>"*", "RAILS_ENV"=>rails_env}
-    w.start    = "#{rails_root}/script/start_resque_worker"
+    w.start    = "/usr/local/bin/rake -f #{rails_root}/Rakefile environment resque:work"
 
     w.dir = rails_root
     w.log = "#{rails_root}/log/resque-#{num}.log"
@@ -119,7 +119,7 @@ God.watch do |w|
   w.name     = "resque-scheduler"
   w.interval = 30.seconds
   w.env      = {"QUEUE"=>"*", "RAILS_ENV"=>rails_env}
-  w.start    = "#{rails_root}/script/start_resque_scheduler"
+  w.start    = "/usr/local/bin/rake -f #{rails_root}/Rakefile environment resque:scheduler"
 
   w.uid = 'votatoe'
   w.gid = 'votatoe'

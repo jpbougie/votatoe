@@ -38,7 +38,15 @@ namespace :compass do
   end
 end
 
+after "deploy:update_code" do
+  deploy.bundle
+end
+
 namespace :deploy do
+  task :bundle do
+    run "cd #{release_path} && RAILS_ENV=#{rails_env} bundle install #{shared_path}/bundle"
+  end
+  
   task :start do
     #run 'rvmsudo god start unicorn resque-work resque-scheduler'
   end
