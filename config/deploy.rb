@@ -56,7 +56,7 @@ namespace :deploy do
   end
   
   task :restart do
-    sudo 'rgod restart unicorn resque-work resque-scheduler'
+    sudo 'god restart unicorn resque-work resque-scheduler'
   end
   
   task :status do

@@ -42,6 +42,15 @@ class PollsController < ApplicationController
   def show
     @poll = Poll.find_or_initialize_by_status_id(params[:id])
     
+    @filter = Vote.scoped
+    if params[:filter]
+      if /^list:/ =~ params[:filter]
+        @list = params[:filter].gsub(/^list:/, '')
+        @users = twitter.list_members(user.username, @list).users.collect(&:id)
+        @filter = @filter.where(:author => @users)
+      end
+    end
+    
     if @poll.new_record?
       begin
         tweet = twitter.status(params[:id])

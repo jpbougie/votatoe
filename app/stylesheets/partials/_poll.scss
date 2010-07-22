@@ -62,6 +62,54 @@ body.main {
       color: #888;
     }
   }
+  
+  section#filter {
+    @include column($blueprint-grid-columns - 1, true);
+
+    padding: 10px;
+    background: white;
+    border: 1px solid #e5e5e5;
+    h2 {
+      font-size: 200%;
+      color: black;
+    }
+    
+    & > ul {
+      display: block;
+      width: 200px;
+      float: left;
+      
+       li {
+         padding: 5px 0 5px 10px;
+         
+         a.selected {
+           color: black;
+           background-color: #E2EBFD;
+         }
+       }
+    }
+    
+    #filter-options {
+      float: left;
+      width: 200px;
+      padding-left: 100px;
+      
+      ul {
+        list-style: none;
+      }
+      
+      .count {
+        display: inline-block;
+        padding: 0 5px;
+        @include border-radius(50px);
+        border: 3px solid #2E6EF4;
+        background-color: #E2EBFD;
+        font-weight: bold;
+        color: black;
+        margin-left: 3px;
+      }
+    }
+  }
 
   section#answers {
     @include column($blueprint-grid-columns, true);
