@@ -16,7 +16,7 @@ class PollsController < ApplicationController
         Tweet.create(:status_id => status_id, :payload => ActiveSupport::JSON.encode(tweet))
         Poll.create(:status_id => status_id, :user => user_id, :text => tweet.text, :last_seen_id => status_id)
         Resque.enqueue(FetchVotes, user_id)
-      rescue TwitterError
+      rescue Twitter::TwitterError
         render 'application/twitter_unavailable'
       end
     
@@ -34,7 +34,7 @@ class PollsController < ApplicationController
   def from_existing
     begin
       @recent_tweets = twitter.user_timeline.select {|tweet| !Poll.exists?(:status_id => tweet.id)}
-    rescue TwitterError
+    rescue Twitter::TwitterError
       render 'application/twitter_unavailable'
     end
   end
@@ -53,7 +53,7 @@ class PollsController < ApplicationController
           @poll.save
           Resque.enqueue(FetchVotes, session[:user])
         end
-      rescue TwitterError
+      rescue Twitter::TwitterError
         render 'application/twitter_unavailable'
       end
     end

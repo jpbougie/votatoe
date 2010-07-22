@@ -48,18 +48,18 @@ namespace :deploy do
   end
   
   task :start do
-    #run 'rvmsudo god start unicorn resque-work resque-scheduler'
+    sudo 'god start unicorn resque-work resque-scheduler'
   end
   
   task :stop do
-    #run 'rvmsudo god stop unicorn resque-work resque-scheduler'
+    sudo 'god stop unicorn resque-work resque-scheduler'
   end
   
   task :restart do
-    #run 'rvmsudo god restart unicorn resque-work resque-scheduler'
+    sudo 'rgod restart unicorn resque-work resque-scheduler'
   end
   
   task :status do
-    #run 'rvmsudo god status'
+    sudo 'god status'
   end
 end

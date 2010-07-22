@@ -5,7 +5,7 @@ module ApplicationHelper
           url = twitter.user(session[:user]).profile_image_url
           Rails.cache.write("twitter_profile_picture:#{session[:user]}", url)
           url
-        rescue TwitterError
+        rescue Twitter::TwitterError
           nil
         end
   end
@@ -13,7 +13,7 @@ module ApplicationHelper
   def profiles(users)
     begin
       twitter.users(*users)
-    rescue TwitterError
+    rescue Twitter::TwitterError
       nil
     end
   end

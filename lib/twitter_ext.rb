@@ -4,7 +4,7 @@ module Twitter
     oa = oauth(true)
     oa.authorize_from_access(token, secret)
     
-    client = CachingTwitterClient.new(oa, token, Redis.new)
+    client = CachingTwitterClient.new(oa, token, Redis.new, :except => [/timeline/, /mentions/])
     
     yield Twitter::Base.new(client)
   end
@@ -34,6 +34,7 @@ class CachingTwitterClient
     @identifier = identifier
     @store = store
     @expires = options[:expires] || 15 * 60 # 15 minutes
+    @except = options[:except] || []
   end
   
   def key(path)
@@ -48,7 +49,7 @@ class CachingTwitterClient
     else
       begin
         result = @client.get(path, headers)
-        @store.setex(k, @expires, result.body)
+        @store.setex(k, @expires, result.body) unless @except.any? {|part| part =~ path}
         result
       rescue Exception => ex
         Rails.logger.error(ex)
