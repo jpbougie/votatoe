@@ -8,6 +8,13 @@
     %h1!= auto_link(@poll.text)
     .speech-arrow
 
+%section#filter
+  %h2 Filter the results
+  %ul
+    %li
+      %a#list-filters{:href => ""} from your lists
+  #filter-options
+
 %section#answers
   - if !@poll.votes.blank?
     - for choice in @poll.choices
@@ -30,3 +37,8 @@
               
   - else
     %h1 No one has answered this poll yet. Your followers should reply to the tweet using #hashtags to describe their choice.
+
+:javascript
+  $(document).ready(function() {
+    $("#list-filters").click(fetchLists)
+  })

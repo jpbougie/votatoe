@@ -11,7 +11,7 @@ God.watch do |w|
   w.dir = rails_root
   
   # unicorn needs to be run from the rails root
-  w.start = "unicorn -E production -c #{rails_root}/config/unicorn.rb #{rails_root}/config.ru"
+  w.start = "cd #{rails_root} && unicorn -E production -c #{rails_root}/config/unicorn.rb #{rails_root}/config.ru -D"
 
   # QUIT gracefully shuts down workers
   w.stop = "kill -QUIT `cat /data/votatoe/shared/pids/unicorn.pid`"
@@ -23,6 +23,8 @@ God.watch do |w|
   w.restart_grace = 10.seconds
   w.pid_file = "/data/votatoe/shared/pids/unicorn.pid"
 
+  w.uid = 'jpbougie'
+  w.gid = 'jpbougie'
 #  w.uid = 'votatoe'
 #  w.gid = 'votatoe'
 

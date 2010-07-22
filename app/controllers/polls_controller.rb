@@ -2,6 +2,7 @@ require 'pp'
 
 class PollsController < ApplicationController
   before_filter :authenticate
+  respond_to :html, :xml, :json
   def create
     user_id = session[:user]
     
@@ -58,5 +59,24 @@ class PollsController < ApplicationController
     end
     
   end
+  
+  def lists
+    @poll = Poll.find_by_status_id(params[:id])
 
+    @lists = twitter.lists(user.username)
+    logger.debug @lists
+    @members = @lists.lists.inject({}) {|hash, list| hash[list.name] = twitter.list_members(user.username, list.slug).users.collect(&:id); hash}
+    
+    @counts = {}
+    @members.each {|name, users| @counts[name] = @poll.votes.where(:author => users).count}
+    
+    respond_with(@counts, :to => [:json])
+    
+  end
+  
+  def filter
+    @poll = Poll.find_by_status_id(params[:id])
+    
+    
+  end
 end

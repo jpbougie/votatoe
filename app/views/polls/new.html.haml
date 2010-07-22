@@ -2,11 +2,12 @@
   #new-tweet
     %h1
       Ask your audience
+    %h2 Your question will be tweeted directly to your account.
     = form_for :tweet, :url => polls_path do |f|
       #status-bubble
         = f.text_area :status, :rows => 5, :placeholder => "Do you think...", :autofocus => true
       .speech-arrow
       %button{:type => "submit"}
-        %h2 get started!
+        %h2 tweet!
   
   %a#show-existing{:href => from_existing_polls_path} I have already tweeted my question

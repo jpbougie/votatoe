@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     session['rtoken']  = oauth.request_token.token
     session['rsecret'] = oauth.request_token.secret
     
-    redirect_to oauth.request_token.authorize_url
+    redirect_to 'http://' + oauth.request_token.authorize_url
     
   end
   

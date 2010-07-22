@@ -7,6 +7,10 @@ Votwitter::Application.routes.draw do |map|
     collection do
       get :from_existing
     end
+    
+    member do 
+      get :lists
+    end
   end
     
   match 'finalize' => "sessions#finalize", :as => :finalize_session
