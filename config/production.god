@@ -8,6 +8,8 @@ God.watch do |w|
 
   w.env = {"RAILS_ENV"=>rails_env}
 
+  w.dir = rails_root
+  
   # unicorn needs to be run from the rails root
   w.start = "unicorn -E production -c #{rails_root}/config/unicorn.rb #{rails_root}/config.ru"
 
